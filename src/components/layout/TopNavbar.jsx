@@ -1,5 +1,5 @@
 // src/components/layout/TopNavbar.jsx
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import useAuthStore from '../../store/authStore';
 
 // Derive a readable page title from the current path
@@ -17,6 +17,7 @@ function getTitle(pathname) {
     '/admin/categories':     'Categories',
     '/admin/notifications':  'Notifications',
     '/admin/settings':       'Platform Settings',
+    '/admin/security':       'Security',
     '/community/gate-verify':'Gate Verification',
     '/community/artisans':   'Artisan Network',
     '/community/jobs':       'Job Activity',
@@ -34,9 +35,15 @@ export default function TopNavbar() {
     <div className="top-navbar">
       <span className="top-navbar-title">{getTitle(pathname)}</span>
       <div className="top-navbar-right">
-        <span style={{ fontSize: 14, color: '#555' }}>
-          {user?.name ?? user?.email}
-        </span>
+        {user?.role === 'super_admin' ? (
+          <Link to="/admin/security" style={{ fontSize: 14, color: '#555', textDecoration: 'none' }}>
+            {user?.name ?? user?.email}
+          </Link>
+        ) : (
+          <span style={{ fontSize: 14, color: '#555' }}>
+            {user?.name ?? user?.email}
+          </span>
+        )}
       </div>
     </div>
   );

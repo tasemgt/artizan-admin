@@ -10,6 +10,7 @@ import AdminDashboard  from './pages/superadmin/AdminDashboard';
 import AdminUsers      from './pages/superadmin/AdminUsers';
 import AdminArtisans   from './pages/superadmin/AdminArtisans';
 import AdminCategories from './pages/superadmin/AdminCategories';
+import AdminSecurity   from './pages/superadmin/AdminSecurity';
 import {
   AdminCommunities, AdminRequests,
   AdminWallets, AdminFees, AdminXP, AdminStrikes,
@@ -68,6 +69,7 @@ export default function App() {
             <Route path="/admin/categories"   element={<AdminCategories />} />
             <Route path="/admin/notifications"element={<AdminNotifications />} />
             <Route path="/admin/settings"     element={<AdminSettings />} />
+            <Route path="/admin/security"     element={<AdminSecurity />} />
           </Route>
 
           {/* ── Community Dashboard (Admin + Security) ───── */}
