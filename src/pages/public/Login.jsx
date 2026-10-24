@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../../store/authStore';
+import { PasswordInput } from '../../components/shared';
 
 export default function Login() {
   const { login, loading, error, clearError } = useAuthStore();
@@ -52,9 +53,7 @@ export default function Login() {
           </div>
           <div className="form-group" style={{ marginBottom: 28 }}>
             <label className="form-label">Password</label>
-            <input
-              type="password"
-              className="form-control"
+            <PasswordInput
               value={password}
               onChange={e => setPassword(e.target.value)}
               placeholder="••••••••"

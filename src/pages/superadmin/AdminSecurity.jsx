@@ -6,7 +6,7 @@
 
 import { useState } from 'react';
 import axiosClient from '../../api/axiosClient';
-import { PageHeader } from '../../components/shared';
+import { PageHeader, PasswordInput } from '../../components/shared';
 
 export default function AdminSecurity() {
   const [currentPassword, setCurrentPassword] = useState('');
@@ -55,9 +55,7 @@ export default function AdminSecurity() {
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label className="form-label">Current Password</label>
-              <input
-                className="form-control"
-                type="password"
+              <PasswordInput
                 value={currentPassword}
                 onChange={e => setCurrentPassword(e.target.value)}
                 required
@@ -66,9 +64,7 @@ export default function AdminSecurity() {
             </div>
             <div className="form-group">
               <label className="form-label">New Password</label>
-              <input
-                className="form-control"
-                type="password"
+              <PasswordInput
                 value={newPassword}
                 onChange={e => setNewPassword(e.target.value)}
                 required
@@ -78,9 +74,7 @@ export default function AdminSecurity() {
             </div>
             <div className="form-group" style={{ marginBottom: 28 }}>
               <label className="form-label">Confirm New Password</label>
-              <input
-                className="form-control"
-                type="password"
+              <PasswordInput
                 value={confirmPassword}
                 onChange={e => setConfirmPassword(e.target.value)}
                 required

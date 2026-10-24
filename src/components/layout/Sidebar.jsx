@@ -106,14 +106,19 @@ function CommunitySecurityNav() {
 export default function Sidebar() {
   const { user, logout } = useAuthStore();
   const navigate = useNavigate();
+  const [loggingOut, setLoggingOut] = useState(false);
 
   if (!user) return null;
 
   const initials = `${user.name?.[0] ?? user.email?.[0] ?? 'A'}`.toUpperCase();
 
   const handleLogout = () => {
-    logout();
-    navigate('/login');
+    if (loggingOut) return;
+    setLoggingOut(true);
+    setTimeout(() => {
+      logout();
+      navigate('/login');
+    }, 1000);
   };
 
   return (
@@ -135,9 +140,14 @@ export default function Sidebar() {
       </nav>
 
       <div style={{ padding: '12px 20px', borderTop: '1px solid rgba(255,255,255,.08)' }}>
-        <button className="nav-item-link" onClick={handleLogout} style={{ width: '100%' }}>
+        <button
+          className="nav-item-link"
+          onClick={handleLogout}
+          disabled={loggingOut}
+          style={{ width: '100%', opacity: loggingOut ? 0.6 : 1, cursor: loggingOut ? 'default' : 'pointer' }}
+        >
           <span className="material-icons">logout</span>
-          <span>Logout</span>
+          <span>{loggingOut ? 'Logging out…' : 'Logout'}</span>
         </button>
       </div>
     </div>

@@ -1,6 +1,7 @@
 // src/components/shared/index.jsx
 // Shared UI components — port and extension of FLC shared components.
 
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 // ── Spinner ───────────────────────────────────────────────────────────
@@ -8,6 +9,38 @@ export function Spinner() {
   return (
     <div className="spinner-wrap">
       <div className="spinner" />
+    </div>
+  );
+}
+
+// ── PasswordInput (show/hide toggle) ───────────────────────────────────
+// Drop-in replacement for <input type="password" className="form-control">
+// everywhere a password is entered (Login, change-password forms).
+export function PasswordInput({ className = 'form-control', style, ...rest }) {
+  const [visible, setVisible] = useState(false);
+  return (
+    <div style={{ position: 'relative' }}>
+      <input
+        {...rest}
+        type={visible ? 'text' : 'password'}
+        className={className}
+        style={{ ...style, paddingRight: 32 }}
+      />
+      <button
+        type="button"
+        tabIndex={-1}
+        onClick={() => setVisible(v => !v)}
+        aria-label={visible ? 'Hide password' : 'Show password'}
+        style={{
+          position: 'absolute', right: 0, top: '50%', transform: 'translateY(-50%)',
+          background: 'none', border: 'none', cursor: 'pointer', color: '#999', padding: 4,
+          display: 'flex', alignItems: 'center',
+        }}
+      >
+        <span className="material-icons" style={{ fontSize: 18 }}>
+          {visible ? 'visibility_off' : 'visibility'}
+        </span>
+      </button>
     </div>
   );
 }
