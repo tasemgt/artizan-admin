@@ -21,11 +21,18 @@ axiosClient.interceptors.request.use((config) => {
   return config;
 });
 
-// On 401: clear token and redirect to login
+// On a dead/invalid token: clear it and redirect to login. Only treat a 401
+// as "session expired" when the backend's JWT-verification middleware
+// produced it (error.code === 'UNAUTHORIZED') - a handful of legitimate
+// business-logic errors reuse the 401 status for other things (e.g. wrong
+// current password on change-password is INVALID_PASSWORD, wrong login
+// credentials is INVALID_CREDENTIALS), and those must NOT force a logout -
+// they're rejected as-is for the caller's own error handling to show.
+// Same bug, same fix already applied in artizan-app's apiClient.ts.
 axiosClient.interceptors.response.use(
   (res) => res,
   (error) => {
-    if (error.response?.status === 401) {
+    if (error.response?.status === 401 && error.response?.data?.error?.code === 'UNAUTHORIZED') {
       localStorage.removeItem('artizan_admin_token');
       localStorage.removeItem('artizan_admin_user');
       window.location.href = '/login';
